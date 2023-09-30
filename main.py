@@ -1,29 +1,33 @@
 from search import *
 
-# state by a set of characters, {F,G} implies wolf and cabbage on right
-# An action in this puzzle is 1-2 objects crossing  {STUFF CROSSING}
-# WINNING STATES IN ORDER
-# [{'G', 'F'},
-# {'F'},
-# {'W', 'F'},
-# {'G', 'F'},
-# {'C', 'F'},
-# {'F'},
-# {'G', 'F'}]
-
 
 class WolfGoatCabbage(Problem):
-    
-    def __init__(self, initial, goal=({})): #goal is empty, because that's what is on the left
+
+    def __init__(self, initial={'C', 'G', 'W', 'F'}, goal={}): #goal is empty, because that's what is on the left
         super().__init__(initial, goal)
 
     def actions(self, state):
+        possible_actions = [
+                {'G', 'F'},
+                {'C', 'F'},
+                {'W', 'F'},
+                {'F'}
+                ]
 
-        possible_actions = ['LEFT', 'RIGHT']
+        states = {
+                frozenset({'C', 'G', 'W', 'F'}): {0, 1, 2, 3},
+                frozenset({'C', 'W', 'F'}): {1, 2, 3},
+                frozenset({'C', 'G', 'F'}): {0, 1, 3},
+                frozenset({'G', 'W', 'F'}): {0, 2, 3},
+                frozenset({'G', 'F'}): {0, 3},
+                frozenset({'W', 'F'}): {2, 3},
+                frozenset({'C', 'F'}): {1, 3},
+                frozenset({'C', 'W'}): {3}
+                }
 
-        # find the possible actions given the state
-
-        return possible_actions
+        actionIndexes = states[frozenset(state)]
+        result = [possible_actions[i] for i in actionIndexes]
+        return result
 
     def result(self, state, action):
         new_state = None
