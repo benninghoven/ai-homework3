@@ -2,15 +2,13 @@
 Search (Chapters 3-4)
 
 The way to use this code is to subclass Problem to create a class of problems,
-then create problem instances and solve them with calls to the various search
+then create problem instances and solve them with calls to the various searchutilsears
 functions.
 """
 
 import sys
 from collections import deque
-
 from utils import *
-
 
 class Problem:
     """The abstract class for a formal problem. You should subclass
@@ -212,7 +210,11 @@ def depth_first_tree_search(problem):
         frontier.extend(node.expand(problem))
     return None
 
-
+#  wgc = WolfGoatCabbage()
+#     solution = depth_first_graph_search(wgc).solution()
+#     print(solution)
+#     solution = breadth_first_graph_search(wgc).solution()
+#     print(solution)
 def depth_first_graph_search(problem):
     """
     [Figure 3.7]
@@ -229,6 +231,7 @@ def depth_first_graph_search(problem):
         node = frontier.pop()
         if problem.goal_test(node.state):
             return node
+      
         explored.add(node.state)
         frontier.extend(child for child in node.expand(problem)
                         if child.state not in explored and child not in frontier)
