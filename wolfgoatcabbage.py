@@ -10,19 +10,21 @@ class WolfGoatCabbage(Problem):
             'F'
         ]
         self.states = {
-            'CGWF': (0, 1, 2, 3),
-            'CGW': (3),
-            'CGF': (0, 1, 3),
-            'GF': (0, 3),
-            'WF': (2, 3),
-            'CW': (3)
+            'CGWF': [0, 1, 2, 3],
+            'CGW': [3],
+            'CGF': [0, 1, 3],
+            'GF': [0, 3],
+            'WF': [2, 3],
+            'CW': [3],
+            'F': [3]
         }
 
     def actions(self, state):
         print("actions called")
-        actionIndexes = list(self.states[state])
-        result = list()
+        print("STATE", state)
+        actionIndexes = self.states[state]
         print("ACTION INDEXES", actionIndexes)
+        result = list()
         for index in actionIndexes:
             result.append(self.possible_actions[index])
         return result
