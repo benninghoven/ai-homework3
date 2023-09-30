@@ -1,65 +1,60 @@
-from search import Problem, depth_first_graph_search, breadth_first_graph_search
+from search import *
+# YOUR CODE GOES HERE
+
+
+def frozen_helper(frznset):
+    result = ""
+    for x in frznset:
+        result += x
+    return result
+
 
 class WolfGoatCabbage(Problem):
-    def __init__(self, initial='CGWF', goal=''):
+    def __init__(self, initial=frozenset(["W", "F", "G", "C"]), goal={}):
         super().__init__(initial, goal)
+
         self.possible_actions = [
-            'GF',
-            'CF',
-            'WF',
-            'F'
-        ]
+                'GF',
+                'CF',
+                'WF',
+                'F'
+                ]
+        # cw, fcw, c, w, fgw, fcg, g,
         self.states = {
-            'CGWF': [0, 1, 2, 3],
-            'CGW': [3],
-            'CGF': [0, 1, 3],
-            'GF': [0, 3],
-            'WF': [2, 3],
-            'CW': [3],
-            'F': [3]
-        }
+                'CFGW': [0],
+                'CFG': [1,2],
+                'FGW': [0, 2],
+                'FG': [0, 3],
+                'CW': [0,3],
+                'W': [0, 1],
+                'G': [1, 2, 3],
+                'C': [0, 2],
+                '': [0, 1, 2, 3],
+                }
 
     def actions(self, state):
-        print("actions called")
-        print("STATE", state)
-        actionIndexes = self.states[state]
-        print("ACTION INDEXES", actionIndexes)
+        stringSet = frozen_helper(state)
+        actionIndexes = self.states[''.join(sorted(stringSet))]
         result = list()
         for index in actionIndexes:
             result.append(self.possible_actions[index])
-        return result
+        return frozenset(result)
 
     def result(self, state, action):
-        print("result called")
-        new_state = list(state)
+        """ Given state and action, return a new state that is the result of the action.
+        Action is assumed to be a valid action in the state """
 
-        if action == 'GF' and 'G' in state and 'F' in state:
-            new_state.remove('G')
-            new_state.remove('F')
-        elif action == 'CF' and 'C' in state and 'F' in state:
-            new_state.remove('C')
-            new_state.remove('F')
-        elif action == 'WF' and 'W' in state and 'F' in state:
-            new_state.remove('W')
-            new_state.remove('F')
-        elif action == 'F' and 'F' in state:
-            new_state.remove('F')
-        result = ""
-        for char in new_state:
-            result += char
-        return result
+        print("STATE",state)
+        print("ACTION",state)
+        print("TYPE",type(action))
+        return frozenset(action) # turn into frozenset
 
     def goal_test(self, state):
-        print("goal_test called")
         return state == self.goal
 
-
 if __name__ == '__main__':
-    initial_state = 'CGWF'
-    goal_state = ''
-    wgc = WolfGoatCabbage(initial=initial_state, goal=goal_state)
+    wgc = WolfGoatCabbage()
     solution = depth_first_graph_search(wgc).solution()
-    print("Solution using Depth-First Search:", solution)
+    print(solution)
     solution = breadth_first_graph_search(wgc).solution()
-    print("Solution using Breadth-First Search:", solution)
-
+    print(solution)
