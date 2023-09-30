@@ -1,4 +1,4 @@
-from WolfGoatCabbage import *
+from wolfgoatcabbage import *
 
 if __name__ == '__main__':
 
