@@ -1,3 +1,4 @@
+
 from search import *
 
 class WolfGoatCabbage(Problem):
@@ -91,54 +92,12 @@ class WolfGoatCabbage(Problem):
         checking against a single self.goal is not enough."""
 
         return state == self.goal
+if __name__ == '__main__':
+
+    wgc = WolfGoatCabbage()
+    solution = depth_first_graph_search(wgc).solution()
+    print(solution)
+    solution = breadth_first_graph_search(wgc).solution()
+    print(solution)
 
 
-
-    # def actions(self, state):
-    #         """Return the actions that can be executed in the given
-    #         state. The result would typically be a list, but if there are
-    #         many actions, consider yielding them one at a time in an
-    #         iterator, rather than building them all at once."""
-
-    #         validActions = []
-
-    #         #create temp set because sets are not mutable during iteration.
-    #         tempSet = state.copy()
-
-    #         # Farmer is on the left side of the river
-    #         if 'F' in state:
-    #             tempSet.remove('F')
-    #             state.remove('F')
-    #             for char in state:
-    #                 tempSet.remove(char)    
-    #                 if self.validState(tempSet) and char != 'F': 
-    #                     copy = tempSet.copy()
-    #                     validActions.append(copy)
-    #                 tempSet.add(char)
-                    
-
-
-    #         # Farmer is on the right side of the river
-    #         else:
-    #             differenceStates = {'G', 'C', 'W'} - state
-    #             tempSet.add('F')
-    #             for char in differenceStates:
-    #                 differenceStates.remove(char)
-    #                 tempSet.add(char)
-    #                 if self.validState(tempSet) and self.validState(differenceStates):
-                        
-    #                     copy = tempSet.copy()
-    #                     validActions.append(copy)
-    #                 tempSet.remove(char)
-    #                 differenceStates.add(char) 
-    #             tempSet.add('F')
-
-
-    #             #test case for moving only the farmer
-    #             if self.validState(tempSet) and self.validState(differenceStates):
-    #                 copy = tempSet.copy()
-    #                 validActions.append(copy)
-
-    #         #printing out the valid actions 
-    #         frozenset(validActions)
-    #         print(validActions)
